@@ -1,10 +1,12 @@
-import RentalOfferCard from '../../components/rental-offer-card/rental-offer-card';
+import OffersList from '../../components/offers-list/offers-list';
+import { Offer } from '../../types/types';
 
 type MainPageProps = {
   offersCount: number;
+  offers: Offer[];
 }
 
-function Main({ offersCount }: MainPageProps): JSX.Element {
+function Main({ offersCount, offers }: MainPageProps): JSX.Element {
   return (
     <>
       <header className='header'>
@@ -12,7 +14,7 @@ function Main({ offersCount }: MainPageProps): JSX.Element {
           <div className='header__wrapper'>
             <div className='header__left'>
               <a className='header__logo-link header__logo-link--active' href='/'>
-                <img className='header__logo' src='img/logo.svg' alt='6 cities logo' width='81' height='41'/>
+                <img className='header__logo' src='img/logo.svg' alt='6 cities logo' width='81' height='41' />
               </a>
             </div>
             <nav className='header__nav'>
@@ -91,13 +93,7 @@ function Main({ offersCount }: MainPageProps): JSX.Element {
                   <li className='places__option' tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <div className='cities__places-list places__list tabs__content'>
-                <RentalOfferCard />
-                <RentalOfferCard />
-                <RentalOfferCard />
-                <RentalOfferCard />
-                <RentalOfferCard />
-              </div>
+              <OffersList offers={offers} />
             </section>
             <div className='cities__right-section'>
               <section className='cities__map map'></section>
