@@ -9,26 +9,26 @@ export enum Options {
 }
 
 export enum OfferHousingtypes {
-  apartment = 'apartment',
-  house = 'house',
-  hotel = 'hotel',
-  room = 'room',
+  Apartment = 'apartment',
+  House = 'house',
+  Hotel = 'hotel',
+  Room = 'room',
 }
 
 export enum OfferGoods {
-  wiFi = 'Wi-Fi',
-  washingMachine = 'Washing machine',
-  towels = 'Towels',
-  heating = 'Heating',
-  coffeeMachine = 'Coffee machine',
-  babySeat = 'Baby seat',
-  kitchen = 'Kitchen',
-  dishWasher = 'Dishwasher',
-  cabelTV = 'Cabel TV',
-  fridge = 'Fridge',
+  WiFi = 'Wi-Fi',
+  WashingMachine = 'Washing machine',
+  Towels = 'Towels',
+  Heating = 'Heating',
+  CoffeeMachine = 'Coffee machine',
+  BabySeat = 'Baby seat',
+  Kitchen = 'Kitchen',
+  DishWasher = 'Dishwasher',
+  CabelTV = 'Cabel TV',
+  Fridge = 'Fridge',
 }
 
-export const RatingStarsTitle = [
+export const RatingTitles = [
   'perfect',
   'good',
   'not bad',
@@ -37,7 +37,22 @@ export const RatingStarsTitle = [
 ] as const;
 
 export enum FormOptions {
-  minReviewLength = 50,
-  maxReviewLength = 300,
-  maxRatingValue = 5,
+  MinReviewLength = 50,
+  MaxReviewLength = 300,
+  MaxRatingValue = 5,
+}
+
+export enum Cities {
+  Amsterdam = 'Amsterdam',
+  Brussels = 'Brussels',
+  Cologne = 'Cologne',
+  Dusseldorf = 'Dusseldorf',
+  Hamburg = 'Hamburg',
+  Paris = 'Paris',
+}
+
+export enum UrlImages {
+  AvatarURL = 'https://i.pravatar.cc/300',
+  MapMarkerDefault = '/img/pin.svg',
+  MapMarkerCurrent = '/img/pin-active.svg',
 }

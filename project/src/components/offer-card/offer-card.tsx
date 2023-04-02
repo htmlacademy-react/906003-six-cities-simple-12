@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Offer } from '../../types/types';
 import { getNumbersRatioInPercent } from '../../utils';
+import { FormOptions } from '../../const';
 
 export type OfferCardProps = Omit<Offer, 'bedrooms' | 'maxAdults' | 'goods' | 'host' | 'description'> & { handleMouseOver: (id: number) => void }
 
@@ -13,6 +14,7 @@ function OfferCard(
     title,
     images,
     isPremium,
+    location,
     handleMouseOver,
   }: OfferCardProps): JSX.Element {
   return (
@@ -37,7 +39,7 @@ function OfferCard(
         </div>
         <div className='place-card__rating rating'>
           <div className='place-card__stars rating__stars'>
-            <span style={{ width: getNumbersRatioInPercent(rating) }}></span>
+            <span style={{ width: getNumbersRatioInPercent(FormOptions.MaxRatingValue, rating) }}></span>
             <span className='visually-hidden'>{rating}</span>
           </div>
         </div>

@@ -1,17 +1,8 @@
+import ReviewsList from '../../components/reviews-list/reviews-list';
 import ReviewsForm from '../../components/review-form/review-form';
 import { Review } from '../../types/types';
-import { ReviewItem } from '../../components/review-item/review-item';
 
-function Room({ reviews }: { reviews: Review[] }): JSX.Element {
-  const reviewsList = reviews.map(({ comment, date, rating, user }) => (
-    <ReviewItem
-      key={date}
-      comment={comment}
-      date={date}
-      rating={rating}
-      user={user}
-    />)
-  );
+function Room({reviews}: {reviews:Review[]}): JSX.Element {
   return (
     <>
       <header className='header'>
@@ -155,10 +146,7 @@ function Room({ reviews }: { reviews: Review[] }): JSX.Element {
                 </div>
               </div>
               <section className='property__reviews reviews'>
-                <h2 className='reviews__title'>Reviews &middot; <span className='reviews__amount'>{reviews.length}</span></h2>
-                <ul className='reviews__list'>
-                  {reviewsList}
-                </ul>
+                <ReviewsList reviews={reviews} />
                 <ReviewsForm />
               </section>
             </div>

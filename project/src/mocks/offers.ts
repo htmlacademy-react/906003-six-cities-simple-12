@@ -1,10 +1,10 @@
 import { Offer } from '../types/types';
-import { OfferHousingtypes, OfferGoods } from '../const';
+import { OfferHousingtypes, OfferGoods, Cities } from '../const';
 
 export const offers: Offer[] = [
   {
     id: 1,
-    type: OfferHousingtypes.apartment,
+    type: OfferHousingtypes.Apartment,
     rating: 4.8,
     price: 120,
     title: 'Beautiful &amp; luxurious studio at great location',
@@ -13,16 +13,16 @@ export const offers: Offer[] = [
     bedrooms: 3,
     maxAdults: 4,
     goods: [
-      OfferGoods.wiFi,
-      OfferGoods.washingMachine,
-      OfferGoods.towels,
-      OfferGoods.heating,
-      OfferGoods.coffeeMachine,
-      OfferGoods.babySeat,
-      OfferGoods.kitchen,
-      OfferGoods.dishWasher,
-      OfferGoods.cabelTV,
-      OfferGoods.fridge
+      OfferGoods.WiFi,
+      OfferGoods.WashingMachine,
+      OfferGoods.Towels,
+      OfferGoods.Heating,
+      OfferGoods.CoffeeMachine,
+      OfferGoods.BabySeat,
+      OfferGoods.Kitchen,
+      OfferGoods.DishWasher,
+      OfferGoods.CabelTV,
+      OfferGoods.Fridge
     ],
     isPremium: true,
     host: {
@@ -30,11 +30,19 @@ export const offers: Offer[] = [
       name: 'Vitaliy',
       avatarUrl: '',
       isPro: true,
-    }
+    },
+    location : {
+      city: Cities.Amsterdam,
+      coordinates: {
+        latitude: 52.3909553943508,
+        longitude: 4.85309666406198,
+      },
+      zoom: 10,
+    },
   },
   {
     id: 2,
-    type: OfferHousingtypes.apartment,
+    type: OfferHousingtypes.Apartment,
     rating: 4.3,
     price: 200,
     title: 'Lorem ipsum',
@@ -49,11 +57,19 @@ export const offers: Offer[] = [
       name: 'Jacob',
       avatarUrl: '',
       isPro: true,
-    }
+    },
+    location : {
+      city: Cities.Amsterdam,
+      coordinates: {
+        latitude: 52.3609553943508,
+        longitude: 4.85309666406198,
+      },
+      zoom: 10,
+    },
   },
   {
     id: 3,
-    type: OfferHousingtypes.apartment,
+    type: OfferHousingtypes.Apartment,
     rating: 4.3,
     price: 250,
     title: 'Lorem ipsum',
@@ -68,11 +84,19 @@ export const offers: Offer[] = [
       name: 'Henry',
       avatarUrl: '',
       isPro: true,
-    }
+    },
+    location : {
+      city: Cities.Amsterdam,
+      coordinates: {
+        latitude: 52.3909553943508,
+        longitude:  4.929309666406198,
+      },
+      zoom: 10,
+    },
   },
   {
     id: 4,
-    type: OfferHousingtypes.apartment,
+    type: OfferHousingtypes.Apartment,
     rating: 4.3,
     price: 400,
     title: 'Lorem ipsum',
@@ -87,11 +111,19 @@ export const offers: Offer[] = [
       name: 'Tracy',
       avatarUrl: '',
       isPro: false,
-    }
+    },
+    location : {
+      city: Cities.Amsterdam,
+      coordinates: {
+        latitude: 52.3809553943508,
+        longitude: 4.939309666406198,
+      },
+      zoom: 10,
+    },
   },
   {
     id: 5,
-    type: OfferHousingtypes.apartment,
+    type: OfferHousingtypes.Apartment,
     rating: 4.3,
     price: 180,
     title: 'Lorem ipsum',
@@ -106,11 +138,19 @@ export const offers: Offer[] = [
       name: 'Ashley',
       avatarUrl: '',
       isPro: true,
-    }
+    },
+    location : {
+      city: Cities.Amsterdam,
+      coordinates: {
+        latitude: 52.3909553943508,
+        longitude: 4.85309666406198,
+      },
+      zoom: 10,
+    },
   },
   {
     id: 6,
-    type: OfferHousingtypes.apartment,
+    type: OfferHousingtypes.Apartment,
     rating: 4.3,
     price: 300,
     title: 'Lorem ipsum',
@@ -125,6 +165,14 @@ export const offers: Offer[] = [
       name: 'Kelly',
       avatarUrl: '',
       isPro: true,
-    }
+    },
+    location : {
+      city: Cities.Amsterdam,
+      coordinates: {
+        latitude: 52.3909553943508,
+        longitude: 4.85309666406198,
+      },
+      zoom: 10,
+    },
   }
 ];

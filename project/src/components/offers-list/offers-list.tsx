@@ -1,10 +1,13 @@
-import { useState } from 'react';
 import { Offer } from '../../types/types';
 import OfferCard from '../offer-card/offer-card';
 
-function OffersList({ offers }: { offers: Offer[] }): JSX.Element {
-  const [, setActiveOffer] = useState(0);
-  const cardsList = offers.map(({ id, type, rating, price, title, images, isPremium }) => (
+type OffersListProps = {
+  offers: Offer[];
+  handleMouseOver: (id: number) => void;
+}
+
+function OffersList({ offers, handleMouseOver }: OffersListProps): JSX.Element {
+  const cardsList = offers.map(({ id, type, rating, price, title, images, isPremium, location }) => (
     <OfferCard
       key={id}
       id={id}
@@ -14,7 +17,8 @@ function OffersList({ offers }: { offers: Offer[] }): JSX.Element {
       title={title}
       images={images}
       isPremium={isPremium}
-      handleMouseOver={() => setActiveOffer(id)}
+      location={location}
+      handleMouseOver={() => handleMouseOver(id)}
     />
   ));
   return (
