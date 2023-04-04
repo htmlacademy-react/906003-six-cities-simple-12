@@ -5,6 +5,17 @@ export type User = {
   isPro: boolean;
 }
 
+export type Coordinates = {
+  latitude: number;
+  longitude: number;
+}
+
+export type Location = {
+  city: string;
+  coordinates: Coordinates;
+  zoom: number;
+}
+
 export type Offer = {
   id: number;
   type: string;
@@ -18,6 +29,7 @@ export type Offer = {
   goods: string[];
   isPremium: boolean;
   host: User;
+  location: Location;
 }
 
 export type Review = {
@@ -27,4 +39,3 @@ export type Review = {
   date: string;
   user: User;
 }
-

@@ -1,9 +1,10 @@
 import { Review } from '../../types/types';
 import { getNumbersRatioInPercent, dateToString} from '../../utils';
+import { FormOptions } from '../../const';
 
 type ReviewItemProps = Omit< Review, 'id'>
 
-export function ReviewItem({
+function ReviewItem({
   comment,
   date,
   rating,
@@ -22,7 +23,7 @@ export function ReviewItem({
       <div className='reviews__info'>
         <div className='reviews__rating rating'>
           <div className='reviews__stars rating__stars'>
-            <span style={{width: getNumbersRatioInPercent(rating)}}></span>
+            <span style={{width: getNumbersRatioInPercent( FormOptions.MaxRatingValue, rating )}}></span>
             <span className='visually-hidden'>Rating</span>
           </div>
         </div>
@@ -34,3 +35,5 @@ export function ReviewItem({
     </li>
   );
 }
+
+export default ReviewItem;

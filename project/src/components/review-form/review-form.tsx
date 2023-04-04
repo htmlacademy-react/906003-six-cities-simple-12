@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { RatingStarsTitle, FormOptions } from '../../const';
+import { FormOptions, RatingTitles } from '../../const';
 import RatingButton from '../rating-button/rating-button';
 
 function ReviewsForm(): JSX.Element {
@@ -17,15 +17,16 @@ function ReviewsForm(): JSX.Element {
   const handleTextAreaChange = (event: React.ChangeEvent<HTMLTextAreaElement>) =>
     setFormData({ ...formData, review: event.target.value });
 
-  const ratingButtonList = RatingStarsTitle.map((cur, index) => (
+  const ratingButtonList = RatingTitles.map((cur, index) => (
     <RatingButton
       key={cur}
-      value={FormOptions.maxRatingValue - index}
+      value={FormOptions.MaxRatingValue - index}
       title={cur}
       handleInputChange={handleInputChange}
     />));
 
-  useEffect(() => (formData.rating !== 0 && (formData.review.length >= 50 && formData.review.length <= 300)) ?
+  useEffect(() => (formData.rating !== 0 &&
+    (formData.review.length >= FormOptions.MinReviewLength && formData.review.length <= FormOptions.MaxReviewLength)) ?
     setFormData((oldValue) => ({ ...oldValue, isActive: true })) :
     setFormData((oldVAlue) => ({ ...oldVAlue, isActive: false })),
   [formData.rating, formData.review]
@@ -41,7 +42,7 @@ function ReviewsForm(): JSX.Element {
       </textarea>
       <div className='reviews__button-wrapper'>
         <p className='reviews__help'>
-          To submit review please make sure to set <span className='reviews__star'>rating</span> and describe your stay with at least <b className='reviews__text-amount'>50 characters</b>.
+          To submit review please make sure to set <span className='reviews__star'>rating</span> and describe your stay with at least <b className='reviews__text-amount'>{FormOptions.MinReviewLength} characters</b>.
         </p>
         <button className='reviews__submit form__submit button' type='submit' disabled={!formData.isActive}>Submit</button>
       </div>

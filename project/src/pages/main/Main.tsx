@@ -1,5 +1,7 @@
 import OffersList from '../../components/offers-list/offers-list';
 import { Offer } from '../../types/types';
+import Map from '../../components/map/map';
+import { useState } from 'react';
 
 type MainPageProps = {
   offersCount: number;
@@ -7,6 +9,15 @@ type MainPageProps = {
 }
 
 function Main({ offersCount, offers }: MainPageProps): JSX.Element {
+  const points = offers.map(({ id, location }) => (
+    {
+      id: id,
+      location: location,
+    }
+  )
+  );
+  const [activeOffer, setActiveOffer] = useState(0);
+
   return (
     <>
       <header className='header'>
@@ -93,10 +104,10 @@ function Main({ offersCount, offers }: MainPageProps): JSX.Element {
                   <li className='places__option' tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <OffersList offers={offers} />
+              <OffersList offers={offers} handleMouseOver={setActiveOffer} />
             </section>
             <div className='cities__right-section'>
-              <section className='cities__map map'></section>
+              <Map points={points} selectedCardId={activeOffer} />
             </div>
           </div>
         </div>
