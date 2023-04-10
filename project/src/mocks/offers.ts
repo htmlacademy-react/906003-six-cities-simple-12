@@ -140,7 +140,7 @@ export const offers: Offer[] = [
       isPro: true,
     },
     location : {
-      city: Cities.Amsterdam,
+      city: Cities.Paris,
       coordinates: {
         latitude: 52.3909553943508,
         longitude: 4.85309666406198,
@@ -167,7 +167,7 @@ export const offers: Offer[] = [
       isPro: true,
     },
     location : {
-      city: Cities.Amsterdam,
+      city: Cities.Paris,
       coordinates: {
         latitude: 52.3909553943508,
         longitude: 4.85309666406198,
