@@ -4,10 +4,6 @@ export enum AppRoute {
   Root = '/',
 }
 
-export enum Options {
-  OffersCount = 6,
-}
-
 export enum OfferHousingtypes {
   Apartment = 'apartment',
   House = 'house',
@@ -55,4 +51,11 @@ export enum UrlImages {
   AvatarURL = 'https://i.pravatar.cc/300',
   MapMarkerDefault = '/img/pin.svg',
   MapMarkerCurrent = '/img/pin-active.svg',
+}
+
+export enum SortTypes {
+  Popular = 'Popular',
+  PriceLowToHigh = 'Price: low to high:',
+  PriceHighToLow = 'Price: high to low',
+  TopRatedFirst = 'Top rated first',
 }
