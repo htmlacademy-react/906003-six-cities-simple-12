@@ -1,246 +1,143 @@
 import ReviewsList from '../../components/reviews-list/reviews-list';
 import ReviewsForm from '../../components/review-form/review-form';
-import { Review } from '../../types/types';
+import Header from '../../components/header/header';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getAuthorizationStatus } from '../../store/user-data/selectors';
+import { getOfferById, getOffersNearby, getReviewsByOfferId, getStatus } from '../../store/offers-data/selectors';
+import OffersList from '../../components/offers-list/offers-list';
+import { getNumbersRatioInPercent, sortReviewsByDate } from '../../utils';
+import { AuthorizationStatus, MAX_PHOTO_COUNT, MAX_RATING_VALUE, MAX_REVIEWS_COUNT, Status } from '../../const';
+import { useParams } from 'react-router-dom';
+import Map from '../../components/map/map';
+import { useEffect } from 'react';
+import Spinner from '../../components/spinner/spinner';
+import { fetchOfferById } from '../../store/api-actions';
 
-function Room({reviews}: {reviews:Review[]}): JSX.Element {
+function Room(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const status = useAppSelector(getStatus);
+  const offerById = useAppSelector(getOfferById);
+  const reviews = useAppSelector(getReviewsByOfferId);
+  const offersNearby = useAppSelector(getOffersNearby);
+  const { id } = useParams();
+
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchOfferById(Number(id)));
+    }
+  }, [id, dispatch]);
+
+  const sortedReviews = [...reviews].sort(sortReviewsByDate).slice(0, MAX_REVIEWS_COUNT);
+
   return (
     <>
-      <header className='header'>
-        <div className='container'>
-          <div className='header__wrapper'>
-            <div className='header__left'>
-              <a className='header__logo-link' href='main.html'>
-                <img className='header__logo' src='img/logo.svg' alt='6 cities logo' width='81' height='41' />
-              </a>
+      <Header />
+      {status === Status.Loading ? <Spinner /> : (
+        <main className='page__main page__main--property'>
+          <section className='property'>
+            <div className='property__gallery-container container'>
+              <div className='property__gallery'>
+                {offerById?.images.slice(0, MAX_PHOTO_COUNT).map((img) => (
+                  <div className='property__image-wrapper' key={img}>
+                    <img className='property__image' src={img} alt='studio' />
+                  </div>)
+                )}
+              </div>
             </div>
-            <nav className='header__nav'>
-              <ul className='header__nav-list'>
-                <li className='header__nav-item user'>
-                  <div className='header__nav-profile'>
-                    <div className='header__avatar-wrapper user__avatar-wrapper'></div>
-                    <span className='header__user-name user__name'>Oliver.conner@gmail.com</span>
+            <div className='property__container container'>
+              <div className='property__wrapper'>
+                {offerById?.isPremium && (
+                  <div className='property__mark'>
+                    <span>Premium</span>
                   </div>
-                </li>
-                <li className='header__nav-item'>
-                  <a className='header__nav-link' href='/'>
-                    <span className='header__signout'>Sign out</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
-
-      <main className='page__main page__main--property'>
-        <section className='property'>
-          <div className='property__gallery-container container'>
-            <div className='property__gallery'>
-              <div className='property__image-wrapper'>
-                <img className='property__image' src='img/room.jpg' alt='studio' />
-              </div>
-              <div className='property__image-wrapper'>
-                <img className='property__image' src='img/apartment-01.jpg' alt='studio' />
-              </div>
-              <div className='property__image-wrapper'>
-                <img className='property__image' src='img/apartment-02.jpg' alt='studio' />
-              </div>
-              <div className='property__image-wrapper'>
-                <img className='property__image' src='img/apartment-03.jpg' alt='studio' />
-              </div>
-              <div className='property__image-wrapper'>
-                <img className='property__image' src='img/studio-01.jpg' alt='studio' />
-              </div>
-              <div className='property__image-wrapper'>
-                <img className='property__image' src='img/apartment-01.jpg' alt='studio' />
-              </div>
-            </div>
-          </div>
-          <div className='property__container container'>
-            <div className='property__wrapper'>
-              <div className='property__mark'>
-                <span>Premium</span>
-              </div>
-              <div className='property__name-wrapper'>
-                <h1 className='property__name'>
-                  Beautiful &amp; luxurious studio at great location
-                </h1>
-              </div>
-              <div className='property__rating rating'>
-                <div className='property__stars rating__stars'>
-                  <span style={{ width: '80%' }}></span>
-                  <span className='visually-hidden'>Rating</span>
+                )}
+                <div className='property__name-wrapper'>
+                  {offerById?.title && (
+                    <h1 className='property__name'>
+                      {offerById.title}
+                    </h1>
+                  )}
                 </div>
-                <span className='property__rating-value rating__value'>4.8</span>
-              </div>
-              <ul className='property__features'>
-                <li className='property__feature property__feature--entire'>
-                  Apartment
-                </li>
-                <li className='property__feature property__feature--bedrooms'>
-                  3 Bedrooms
-                </li>
-                <li className='property__feature property__feature--adults'>
-                  Max 4 adults
-                </li>
-              </ul>
-              <div className='property__price'>
-                <b className='property__price-value'>&euro;120</b>
-                <span className='property__price-text'>&nbsp;night</span>
-              </div>
-              <div className='property__inside'>
-                <h2 className='property__inside-title'>What&apos;s inside</h2>
-                <ul className='property__inside-list'>
-                  <li className='property__inside-item'>
-                    Wi-Fi
+                <div className='property__rating rating'>
+                  <div className='property__stars rating__stars'>
+                    <span style={{ width: getNumbersRatioInPercent(MAX_RATING_VALUE, offerById?.rating) }}></span>
+                    <span className='visually-hidden'>Rating</span>
+                  </div>
+                  <span className='property__rating-value rating__value'>{offerById?.rating}</span>
+                </div>
+                <ul className='property__features'>
+                  <li className='property__feature property__feature--entire'>
+                    {offerById?.type}
                   </li>
-                  <li className='property__inside-item'>
-                    Washing machine
+                  <li className='property__feature property__feature--bedrooms'>
+                    {offerById?.bedrooms}
                   </li>
-                  <li className='property__inside-item'>
-                    Towels
-                  </li>
-                  <li className='property__inside-item'>
-                    Heating
-                  </li>
-                  <li className='property__inside-item'>
-                    Coffee machine
-                  </li>
-                  <li className='property__inside-item'>
-                    Baby seat
-                  </li>
-                  <li className='property__inside-item'>
-                    Kitchen
-                  </li>
-                  <li className='property__inside-item'>
-                    Dishwasher
-                  </li>
-                  <li className='property__inside-item'>
-                    Cabel TV
-                  </li>
-                  <li className='property__inside-item'>
-                    Fridge
+                  <li className='property__feature property__feature--adults'>
+                    {offerById?.maxAdults}
                   </li>
                 </ul>
+                <div className='property__price'>
+                  <b className='property__price-value'>&euro;{offerById?.price}</b>
+                  <span className='property__price-text'>&nbsp;night</span>
+                </div>
+                <div className='property__inside'>
+                  <h2 className='property__inside-title'>What&apos;s inside</h2>
+                  <ul className='property__inside-list'>
+                    {offerById?.goods.map((itemGoods) => (
+                      <li className='property__inside-item' key={itemGoods}>
+                        {itemGoods}
+                      </li>
+                    )
+                    )}
+                  </ul>
+                </div>
+                <div className='property__host'>
+                  <h2 className='property__host-title'>Meet the host</h2>
+                  <div className='property__host-user user'>
+                    <div className={`property__avatar-wrapper ${offerById?.host.isPro ? 'property__avatar-wrapper--pro' : ''} user__avatar-wrapper`}>
+                      <img className='property__avatar user__avatar' src={offerById?.host.avatarUrl} width='74' height='74' alt={offerById?.host.name} />
+                    </div>
+                    <span className='property__user-name'>
+                      {offerById?.host.name}
+                    </span>
+                    {offerById?.host.isPro && (
+                      <span className='property__user-status'>
+                        Pro
+                      </span>
+                    )}
+                  </div>
+                  <div className='property__description'>
+                    <p className='property__text'>
+                      {offerById?.description}
+                    </p>
+                  </div>
+                </div>
+                <section className='property__reviews reviews'>
+                  <h2 className='reviews__title'>Reviews &middot; <span className='reviews__amount'>{reviews.length}</span></h2>
+                  <ReviewsList reviews={sortedReviews} />
+                  {authorizationStatus === AuthorizationStatus.Auth && <ReviewsForm id={offerById?.id}/>}
+                </section>
               </div>
-              <div className='property__host'>
-                <h2 className='property__host-title'>Meet the host</h2>
-                <div className='property__host-user user'>
-                  <div className='property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper'>
-                    <img className='property__avatar user__avatar' src='img/avatar-angelina.jpg' width='74' height='74' alt='Host avatar' />
-                  </div>
-                  <span className='property__user-name'>
-                    Angelina
-                  </span>
-                  <span className='property__user-status'>
-                    Pro
-                  </span>
-                </div>
-                <div className='property__description'>
-                  <p className='property__text'>
-                    A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
-                  </p>
-                  <p className='property__text'>
-                    An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.
-                  </p>
-                </div>
-              </div>
-              <section className='property__reviews reviews'>
-                <ReviewsList reviews={reviews} />
-                <ReviewsForm />
-              </section>
             </div>
-          </div>
-          <section className='property__map map'></section>
-        </section>
-        <div className='container'>
-          <section className='near-places places'>
-            <h2 className='near-places__title'>Other places in the neighbourhood</h2>
-            <div className='near-places__list places__list'>
-              <article className='near-places__card place-card'>
-                <div className='near-places__image-wrapper place-card__image-wrapper'>
-                  <a href='/'>
-                    <img className='place-card__image' src='img/room.jpg' width='260' height='200' alt='Place' />
-                  </a>
-                </div>
-                <div className='place-card__info'>
-                  <div className='place-card__price-wrapper'>
-                    <div className='place-card__price'>
-                      <b className='place-card__price-value'>&euro;80</b>
-                      <span className='place-card__price-text'>&#47;&nbsp;night</span>
-                    </div>
-                  </div>
-                  <div className='place-card__rating rating'>
-                    <div className='place-card__stars rating__stars'>
-                      <span style={{ width: '80%' }}></span>
-                      <span className='visually-hidden'>Rating</span>
-                    </div>
-                  </div>
-                  <h2 className='place-card__name'>
-                    <a href='/'>Wood and stone place</a>
-                  </h2>
-                  <p className='place-card__type'>Private room</p>
-                </div>
-              </article>
-
-              <article className='near-places__card place-card'>
-                <div className='near-places__image-wrapper place-card__image-wrapper'>
-                  <a href='/'>
-                    <img className='place-card__image' src='img/apartment-02.jpg' width='260' height='200' alt='Place' />
-                  </a>
-                </div>
-                <div className='place-card__info'>
-                  <div className='place-card__price-wrapper'>
-                    <div className='place-card__price'>
-                      <b className='place-card__price-value'>&euro;132</b>
-                      <span className='place-card__price-text'>&#47;&nbsp;night</span>
-                    </div>
-                  </div>
-                  <div className='place-card__rating rating'>
-                    <div className='place-card__stars rating__stars'>
-                      <span style={{ width: '80%' }}></span>
-                      <span className='visually-hidden'>Rating</span>
-                    </div>
-                  </div>
-                  <h2 className='place-card__name'>
-                    <a href='/'>Canal View Prinsengracht</a>
-                  </h2>
-                  <p className='place-card__type'>Apartment</p>
-                </div>
-              </article>
-
-              <article className='near-places__card place-card'>
-                <div className='place-card__mark'>
-                  <span>Premium</span>
-                </div>
-                <div className='near-places__image-wrapper place-card__image-wrapper'>
-                  <a href='/'>
-                    <img className='place-card__image' src='img/apartment-03.jpg' width='260' height='200' alt='Place' />
-                  </a>
-                </div>
-                <div className='place-card__info'>
-                  <div className='place-card__price-wrapper'>
-                    <div className='place-card__price'>
-                      <b className='place-card__price-value'>&euro;180</b>
-                      <span className='place-card__price-text'>&#47;&nbsp;night</span>
-                    </div>
-                  </div>
-                  <div className='place-card__rating rating'>
-                    <div className='place-card__stars rating__stars'>
-                      <span style={{ width: '100%' }}></span>
-                      <span className='visually-hidden'>Rating</span>
-                    </div>
-                  </div>
-                  <h2 className='place-card__name'>
-                    <a href='/'>Nice, cozy, warm big bed apartment</a>
-                  </h2>
-                  <p className='place-card__type'>Apartment</p>
-                </div>
-              </article>
-            </div>
+            <section className='property__map map'>
+              <Map offers={offerById && [...offersNearby, offerById]} selectedOffer={offerById} />
+            </section>
           </section>
-        </div>
-      </main>
+          <div className='container'>
+            <section className='near-places places'>
+              <h2 className='near-places__title'>Other places in the neighbourhood</h2>
+              <div className='near-places__list places__list'>
+                {offersNearby.length ? (
+                  <OffersList offers={offersNearby} />
+                ) : (
+                  <p>Sorry, no places found nearby</p>
+                )}
+              </div>
+            </section>
+          </div>
+        </main>
+      )}
     </>
   );
 }

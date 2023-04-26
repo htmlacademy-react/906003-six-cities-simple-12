@@ -2,29 +2,15 @@ export enum AppRoute {
   Login = '/login',
   Room = '/offer',
   Root = '/',
+  NotFound = '/page-not-found',
 }
 
-export enum OfferHousingtypes {
-  Apartment = 'apartment',
-  House = 'house',
-  Hotel = 'hotel',
-  Room = 'room',
+export enum NameSpace {
+  Offer = 'OFFER',
+  User = 'USER',
 }
 
-export enum OfferGoods {
-  WiFi = 'Wi-Fi',
-  WashingMachine = 'Washing machine',
-  Towels = 'Towels',
-  Heating = 'Heating',
-  CoffeeMachine = 'Coffee machine',
-  BabySeat = 'Baby seat',
-  Kitchen = 'Kitchen',
-  DishWasher = 'Dishwasher',
-  CabelTV = 'Cabel TV',
-  Fridge = 'Fridge',
-}
-
-export const RatingTitles = [
+export const RatingTitle = [
   'perfect',
   'good',
   'not bad',
@@ -32,13 +18,12 @@ export const RatingTitles = [
   'terribly',
 ] as const;
 
-export enum FormOptions {
+export enum FormOption {
   MinReviewLength = 50,
   MaxReviewLength = 300,
-  MaxRatingValue = 5,
 }
 
-export enum Cities {
+export enum City {
   Amsterdam = 'Amsterdam',
   Brussels = 'Brussels',
   Cologne = 'Cologne',
@@ -47,15 +32,42 @@ export enum Cities {
   Paris = 'Paris',
 }
 
-export enum UrlImages {
-  AvatarURL = 'https://i.pravatar.cc/300',
+export enum UrlImage {
   MapMarkerDefault = '/img/pin.svg',
   MapMarkerCurrent = '/img/pin-active.svg',
 }
 
-export enum SortTypes {
+export enum SortType {
   Popular = 'Popular',
   PriceLowToHigh = 'Price: low to high:',
   PriceHighToLow = 'Price: high to low',
   TopRatedFirst = 'Top rated first',
 }
+
+export const ApiOption = {
+  BackendURL: 'https://12.react.pages.academy/six-cities-simple',
+  RequestTimeout: 5000,
+  OffersRoute: '/hotels',
+  LoginRoute: '/login',
+  LogoutRoute: '/logout',
+  OffersNearbyRoute: '/nearby',
+  ReviewsRoute: '/comments',
+} as const;
+
+export enum AuthorizationStatus {
+  Auth = 'AUTH',
+  NoAuth = 'NO_AUTH',
+  Unknown = 'UNKNOWN',
+}
+
+export enum Status {
+  Loading = 'loading',
+  Success = 'success',
+  Error = 'error',
+}
+
+export const MAX_RATING_VALUE = 5;
+export const DEFAULT_CITY = 'Paris';
+export const PASSWORD_REG_EXP = new RegExp(/^(?=.*[a-zA-Z])(?=.*[0-9]).+$/);
+export const MAX_REVIEWS_COUNT = 10;
+export const MAX_PHOTO_COUNT = 6;

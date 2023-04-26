@@ -3,22 +3,27 @@ import { store } from '../store/index';
 export type State = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
+export type AuthData = {
+  login: string;
+  password: string;
+}
+
 export type User = {
   id: number;
   name: string;
+  email: string;
   avatarUrl: string;
   isPro: boolean;
+  token: string;
 }
 
-export type Coordinates = {
-  latitude: number;
-  longitude: number;
-}
-
-export type Location = {
-  city: string;
-  coordinates: Coordinates;
-  zoom: number;
+export type City = {
+  location: {
+    latitude: number;
+    longitude: number;
+    zoom: number;
+  };
+  name: string;
 }
 
 export type Offer = {
@@ -29,12 +34,18 @@ export type Offer = {
   title: string;
   description: string;
   images: string[];
+  previewImage: string;
   bedrooms: number;
   maxAdults: number;
   goods: string[];
   isPremium: boolean;
   host: User;
-  location: Location;
+  location: {
+    latitude: number;
+    longitude: number;
+    zoom: number;
+  };
+  city: City;
 }
 
 export type Review = {

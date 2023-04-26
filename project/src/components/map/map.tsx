@@ -1,54 +1,60 @@
 import { useEffect, useRef } from 'react';
-import { Icon, Marker} from 'leaflet';
+import { Icon, Marker } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { UrlImages } from '../../const';
+import { UrlImage } from '../../const';
 import useMap from '../../hooks/useMap';
-import { Location } from '../../types/types';
+import { Offer } from '../../types/types';
 
 type MapProps = {
-  points: {
-    id: number;
-    location: Location;
-  }[];
-  selectedCardId: number;
+  offers: Offer[] | undefined;
+  selectedOffer: Offer | undefined;
 }
 
-function Map({ points, selectedCardId }: MapProps) {
+function Map({ offers, selectedOffer }: MapProps) {
   const mapRef = useRef(null);
-  const map = useMap(mapRef, points[0].location);
-
-  const defaultCustomIcon = new Icon({
-    iconUrl: UrlImages.MapMarkerDefault,
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
-  });
-
-  const currentCustomIcon = new Icon({
-    iconUrl: UrlImages.MapMarkerCurrent,
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
-  });
+  const city = offers && !!offers.length && offers[0].city;
+  const map = useMap(mapRef, city);
 
   useEffect(() => {
-    if (map) {
-      points.map((point) =>
+    const defaultCustomIcon = new Icon({
+      iconUrl: UrlImage.MapMarkerDefault,
+      iconSize: [23, 36],
+      iconAnchor: [20, 40],
+    });
+
+    const currentCustomIcon = new Icon({
+      iconUrl: UrlImage.MapMarkerCurrent,
+      iconSize: [23, 36],
+      iconAnchor: [20, 40],
+    });
+
+    if (map && offers) {
+      offers.forEach((offer) =>
         new Marker(
           {
-            lat: point.location.coordinates.latitude,
-            lng: point.location.coordinates.longitude,
+            lat: offer.location.latitude,
+            lng: offer.location.longitude,
           }
         ).setIcon(
-          selectedCardId !== undefined && point.id === selectedCardId ?
+          selectedOffer !== undefined && offer.id === selectedOffer.id ?
             currentCustomIcon :
             defaultCustomIcon
         ).addTo(map)
       );
     }
-  }, [map, points, selectedCardId]
+
+    return () => {
+      map?.eachLayer((layer) => {
+        if (layer.getPane()?.classList.contains('leaflet-marker-pane')) {
+          layer.remove();
+        }
+      });
+    };
+  }, [map, offers, selectedOffer]
   );
 
   return (
-    <section className='cities__map map' ref={mapRef}></section>
+    <section style={{ height: '100%', width: '100%' }} ref={mapRef}></section>
   );
 }
 
