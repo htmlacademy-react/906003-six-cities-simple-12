@@ -1,23 +1,19 @@
-import {Route, BrowserRouter, Routes} from 'react-router-dom';
-import {AppRoute} from '../../const';
+import { Route,Routes } from 'react-router-dom';
+import HistoryRouter from '../history-route/history-route';
+import browserHistory from '../../browser-history';
+import { AppRoute } from '../../const';
 import Main from '../../pages/main/main';
 import Login from '../../pages/login/login';
 import Room from '../../pages/room/room';
 import NotFound from '../../pages/not-found/not-found';
-import {Offer, Review} from '../../types/types';
 
-type AppProps = {
-  offers: Offer[];
-  reviews: Review[];
-}
-
-function App({offers, reviews}: AppProps): JSX.Element {
+function App(): JSX.Element {
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route
           path={AppRoute.Root}
-          element={<Main offers={offers} />}
+          element={<Main />}
         />
         <Route
           path={AppRoute.Login}
@@ -25,14 +21,14 @@ function App({offers, reviews}: AppProps): JSX.Element {
         />
         <Route
           path={`${AppRoute.Room}/:id`}
-          element={<Room reviews={reviews}/>}
+          element={<Room/>}
         />
         <Route
           path='*'
           element={<NotFound/>}
         />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 

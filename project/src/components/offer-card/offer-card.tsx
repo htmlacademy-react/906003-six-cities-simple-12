@@ -1,24 +1,23 @@
 import { Link } from 'react-router-dom';
 import { Offer } from '../../types/types';
 import { getNumbersRatioInPercent } from '../../utils';
-import { FormOptions } from '../../const';
+import { MAX_RATING_VALUE } from '../../const';
 
-export type OfferCardProps = Omit<Offer, 'bedrooms' | 'maxAdults' | 'goods' | 'host' | 'description'> & { handleMouseOver: (id: number) => void }
+export type OfferCardProps = Omit<Offer, 'bedrooms' | 'maxAdults' | 'goods' | 'host' | 'description' | 'city'> & { onMouseOver: (id: number) => void }
 
 function OfferCard(
   {
     id,
-    type,
-    rating,
-    price,
-    title,
-    images,
     isPremium,
-    location,
-    handleMouseOver,
+    previewImage,
+    price,
+    rating,
+    type,
+    title,
+    onMouseOver
   }: OfferCardProps): JSX.Element {
   return (
-    <article className='cities__card place-card' onMouseOver={() => handleMouseOver(id)} >
+    <article className='cities__card place-card' onMouseOver={() => onMouseOver(id)} >
       {isPremium && (
         <div className='place-card__mark'>
           <span>Premium</span>
@@ -26,7 +25,7 @@ function OfferCard(
       )}
       <div className='cities__image-wrapper place-card__image-wrapper'>
         <Link to={`/offer/${id}`}>
-          <img className='place-card__image' src={images[0]} width='260' height='200' alt={title} />
+          <img className='place-card__image' src={previewImage} width='260' height='200' alt={title} />
         </Link>
       </div>
       <div className='place-card__info'>
@@ -39,7 +38,7 @@ function OfferCard(
         </div>
         <div className='place-card__rating rating'>
           <div className='place-card__stars rating__stars'>
-            <span style={{ width: getNumbersRatioInPercent(FormOptions.MaxRatingValue, rating) }}></span>
+            <span style={{ width: getNumbersRatioInPercent(MAX_RATING_VALUE, rating) }}></span>
             <span className='visually-hidden'>{rating}</span>
           </div>
         </div>

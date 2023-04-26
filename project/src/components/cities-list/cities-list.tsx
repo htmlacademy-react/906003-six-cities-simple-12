@@ -1,20 +1,20 @@
-import { Cities } from '../../const';
+import { City } from '../../const';
 import { Link } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../hooks';
-import { selectCity } from '../../store/offer-filtering/offer-filtering';
-
+import { selectCity } from '../../store/offers-data/offers-data';
+import { getCurrentCity } from '../../store/offers-data/selectors';
 
 function CitiesList(): JSX.Element {
-  const selectedCity = useAppSelector((state) => state.offers.city);
+  const selectedCity = useAppSelector(getCurrentCity);
   const dispatch = useAppDispatch();
 
   const citiesList = [
-    Cities.Paris,
-    Cities.Cologne,
-    Cities.Brussels,
-    Cities.Amsterdam,
-    Cities.Hamburg,
-    Cities.Dusseldorf
+    City.Paris,
+    City.Cologne,
+    City.Brussels,
+    City.Amsterdam,
+    City.Hamburg,
+    City.Dusseldorf
   ].map((city) => (
     <li key={city} className='locations__item'>
       <Link className={selectedCity === city ?

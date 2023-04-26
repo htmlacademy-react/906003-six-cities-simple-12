@@ -1,23 +1,24 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { SortTypes } from '../../const';
-import { sortOffers } from '../../store/offer-filtering/offer-filtering';
+import { SortType } from '../../const';
+import { sortOffers } from '../../store/offers-data/offers-data';
 import { useState } from 'react';
+import { getSortType } from '../../store/offers-data/selectors';
 
 function OffersSort(): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
-  const selectedSort = useAppSelector((state) => state.offers.sortType);
+  const selectedSort = useAppSelector(getSortType);
   const dispatch = useAppDispatch();
   const placesOptionsList = [
-    SortTypes.Popular,
-    SortTypes.PriceLowToHigh,
-    SortTypes.PriceHighToLow,
-    SortTypes.TopRatedFirst
+    SortType.Popular,
+    SortType.PriceLowToHigh,
+    SortType.PriceHighToLow,
+    SortType.TopRatedFirst
   ].map((currentSort) => (
     <li
       key={currentSort}
       className={`places__option ${selectedSort === currentSort ? 'places__option--active' : ''}`}
       tabIndex={0}
-      onClick={() => dispatch(sortOffers({sortType: currentSort}))}
+      onClick={() => dispatch(sortOffers(currentSort))}
     >
       {currentSort}
     </li>
