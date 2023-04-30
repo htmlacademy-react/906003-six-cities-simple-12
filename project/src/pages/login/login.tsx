@@ -1,28 +1,19 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Logo from '../../components/logo/logo';
-import { AppRoute, AuthorizationStatus, City, PASSWORD_REG_EXP } from '../../const';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { AppRoute, City, PASSWORD_REG_EXP } from '../../const';
+import { useAppDispatch} from '../../hooks';
 import { getRandomCity } from '../../utils';
 import { selectCity } from '../../store/offers-data/offers-data';
-import { FormEvent, useEffect, useRef } from 'react';
-import { getAuthorizationStatus } from '../../store/user-data/selectors';
+import { FormEvent, useRef } from 'react';
 import { AuthData } from '../../types/types';
 import { logIn } from '../../store/api-actions';
+import React from 'react';
 
 function Login(): JSX.Element {
   const dispatch = useAppDispatch();
   const randomCity = getRandomCity(Object.keys(City));
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-  const navigate = useNavigate();
-  const authorizationStatus = useAppSelector(getAuthorizationStatus);
-
-  useEffect(() => {
-    if (authorizationStatus === AuthorizationStatus.Auth) {
-      navigate(AppRoute.Root);
-    }
-  }, [authorizationStatus, navigate]);
-
   const onSubmit = (authData: AuthData) => dispatch(logIn(authData));
 
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -84,4 +75,4 @@ function Login(): JSX.Element {
   );
 }
 
-export default Login;
+export default React.memo(Login);
