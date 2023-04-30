@@ -3,7 +3,7 @@ import { Offer } from '../../types/types';
 import { getNumbersRatioInPercent } from '../../utils';
 import { MAX_RATING_VALUE } from '../../const';
 
-export type OfferCardProps = Omit<Offer, 'bedrooms' | 'maxAdults' | 'goods' | 'host' | 'description' | 'city'> & { onMouseOver: (id: number) => void }
+export type OfferCardProps = Omit<Offer, 'bedrooms' | 'maxAdults' | 'goods' | 'host' | 'description' | 'city'> & { onMouseOver?: (id: number | null) => void }
 
 function OfferCard(
   {
@@ -17,7 +17,7 @@ function OfferCard(
     onMouseOver
   }: OfferCardProps): JSX.Element {
   return (
-    <article className='cities__card place-card' onMouseOver={() => onMouseOver(id)} >
+    <article className='cities__card place-card' onMouseOver={() =>onMouseOver && onMouseOver(id)} onMouseLeave={() =>onMouseOver && onMouseOver(null)} >
       {isPremium && (
         <div className='place-card__mark'>
           <span>Premium</span>

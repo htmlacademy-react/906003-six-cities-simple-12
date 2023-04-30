@@ -6,7 +6,7 @@ import OfferCard from '../offer-card/offer-card';
 
 type OffersListProps = {
   offers: Offer[];
-  handleMouseOver?: (id: number) => void;
+  handleMouseOver?: (id: number | null) => void;
 }
 
 function OffersList({ offers, handleMouseOver }: OffersListProps): JSX.Element {
@@ -24,7 +24,7 @@ function OffersList({ offers, handleMouseOver }: OffersListProps): JSX.Element {
       images={images}
       isPremium={isPremium}
       location={location}
-      onMouseOver={() => handleMouseOver && handleMouseOver(id)}
+      onMouseOver={handleMouseOver && handleMouseOver}
     />
   ));
   return (

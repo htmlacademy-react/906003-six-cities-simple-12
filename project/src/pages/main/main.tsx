@@ -18,7 +18,7 @@ function Main(): JSX.Element {
   const offersByCity = useAppSelector(getOffersByCity);
   const currentCity = useAppSelector(getCurrentCity);
 
-  const handleCardHover = (cardId: number) => {
+  const handleCardHover = (cardId: number | null) => {
     const currentOffer = offers && offers.find(({ id }) => id === cardId);
     setActiveOffer(currentOffer);
   };
